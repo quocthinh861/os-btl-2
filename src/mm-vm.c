@@ -118,13 +118,14 @@ int __alloc(struct pcb_t *caller, int vmaid, int rgid, int size, int *alloc_addr
     return 0;
   }
 
-  printf("Process %d: Failed to allocate memory region\n", caller->pid);
+  printf("Process %d, failed to allocate memory region with size %d\n", caller->pid, size);
 
   /* TODO get_free_vmrg_area FAILED handle the region management (Fig.6)*/
 
   /*Attempt to increate limit to get space */
   struct vm_area_struct *cur_vma = get_vma_by_num(caller->mm, vmaid);
   int inc_sz = PAGING_PAGE_ALIGNSZ(size);
+  printf("inc_sz = %d\n", inc_sz);
   // int inc_limit_ret
   int old_sbrk;
 
