@@ -1,25 +1,46 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "name": "Debug C",
-        "type": "cppdbg",
-        "request": "launch",
-        "args": ["test"],
-        "stopAtEntry": false,
-        "externalConsole": false,
-        "cwd": "${workspaceFolder}",
-        "program": "${workspaceFolder}/os",
-        "MIMode": "gdb",
-        "miDebuggerPath": "gdb",
-        "setupCommands": [
-          {
-            "description": "Enable pretty-printing for gdb",
-            "text": "-enable-pretty-printing",
-            "ignoreFailures": true
-          }
-        ],
-        "preLaunchTask": "build"
-      },
-    ]
-  }
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug C",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [
+        "test"
+      ],
+      "stopAtEntry": false,
+      "externalConsole": false,
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceFolder}/os",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "build"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "d:/os_project/labSync-student/ossim_source_code_part2_hk231_paging/src",
+      "program": "d:/os_project/labSync-student/ossim_source_code_part2_hk231_paging/src/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}
