@@ -179,9 +179,20 @@ int __free(struct pcb_t *caller, int vmaid, int rgid)
 int pgalloc(struct pcb_t *proc, uint32_t size, uint32_t reg_index)
 {
   int addr;
+  printf("Process %d: Allocating %d bytes\n", proc->pid, size);
+
+  printf("------------------------ show page table process %d before allocating ------------------------\n", proc->pid);
+  print_pgtbl(proc, 0, -1);
+  printf("----------------------------------------------------------------------------------------------\n");
 
   /* By default using vmaid = 0 */
-  return __alloc(proc, 0, reg_index, size, &addr);
+  int result = __alloc(proc, 0, reg_index, size, &addr);
+
+  printf("------------------------ show page table process %d after allocating ------------------------\n", proc->pid);
+  print_pgtbl(proc, 0, -1);
+  printf("---------------------------------------------------------------------------------------------\n");
+
+  return result;
 }
 
 /*pgfree - PAGING-based free a region memory
@@ -493,7 +504,8 @@ int inc_vma_limit(struct pcb_t *caller, int vmaid, int inc_sz)
   int old_end = cur_vma->vm_end;
 
   /*Validate overlap of obtained region */
-  if (validate_overlap_vm_area(caller, vmaid, area->rg_start, area->rg_end) < 0) {
+  if (validate_overlap_vm_area(caller, vmaid, area->rg_start, area->rg_end) < 0)
+  {
     printf("inc_vma_limit(): validate_overlap_vm_area() failed\n");
     return -1; /*Overlap and failed allocation */
   }
