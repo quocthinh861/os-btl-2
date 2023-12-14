@@ -493,8 +493,10 @@ int inc_vma_limit(struct pcb_t *caller, int vmaid, int inc_sz)
   int old_end = cur_vma->vm_end;
 
   /*Validate overlap of obtained region */
-  if (validate_overlap_vm_area(caller, vmaid, area->rg_start, area->rg_end) < 0)
+  if (validate_overlap_vm_area(caller, vmaid, area->rg_start, area->rg_end) < 0) {
+    printf("inc_vma_limit(): validate_overlap_vm_area() failed\n");
     return -1; /*Overlap and failed allocation */
+  }
 
   /* The obtained vm area (only)
    * now will be alloc real ram region */
