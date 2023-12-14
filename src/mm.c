@@ -155,9 +155,9 @@ int alloc_pages_range(struct pcb_t *caller, int req_pgnum, struct framephy_struc
   if ((req_pgnum * PAGING_PAGESZ) > caller->mram->maxsz)
     return -3000;
 
+printf("req_pgnum: %d\n", req_pgnum);
   for (pgit = 0; pgit < req_pgnum; pgit++)
   {
-    printf("pgit = %d\n", pgit);
     if (MEMPHY_get_freefp(caller->mram, &fpn) == 0)
     {
       printf("Success get free frame: %d\n", fpn);
