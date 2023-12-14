@@ -136,6 +136,21 @@ int __alloc(struct pcb_t *caller, int vmaid, int rgid, int size, int *alloc_addr
    */
   inc_vma_limit(caller, vmaid, inc_sz);
 
+    struct vm_rg_struct *rgit = cur_vma->vm_freerg_list;
+
+  if (rgit == NULL)
+    return -1;
+
+  // show free list of vm area with new region
+  printf("Free list of vm area for process %d: ", caller->pid);
+  struct vm_rg_struct *temp = rgit;
+  while (temp != NULL)
+  {
+    printf("[%d, %d] ", temp->rg_start, temp->rg_end);
+    temp = temp->rg_next;
+  }
+  printf("\n");
+
   /*Successful increase limit */
   caller->mm->symrgtbl[rgid].rg_start = old_sbrk;
   caller->mm->symrgtbl[rgid].rg_end = old_sbrk + size;
