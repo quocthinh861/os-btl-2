@@ -176,6 +176,7 @@ int alloc_pages_range(struct pcb_t *caller, int req_pgnum, struct framephy_struc
       }
       else
       {
+        printf("Success find victim page: %d\n", vicpgn);
         vicpte = caller->mm->pgd[vicpgn];
 
         vicfpn = GETVAL(vicpte, PAGING_PTE_FPN_MASK, 0);
