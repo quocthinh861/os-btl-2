@@ -157,7 +157,7 @@ int alloc_pages_range(struct pcb_t *caller, int req_pgnum, struct framephy_struc
 
   for (pgit = 0; pgit < req_pgnum; pgit++)
   {
-
+    printf("pgit = %d\n", pgit);
     if (MEMPHY_get_freefp(caller->mram, &fpn) == 0)
     {
       printf("Success get free frame: %d\n", fpn);
