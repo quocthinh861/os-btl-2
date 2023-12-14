@@ -572,7 +572,15 @@ int get_free_vmrg_area(struct pcb_t *caller, int vmaid, int size, struct vm_rg_s
 
   if (rgit == NULL)
     return -1;
-
+  // show free list of vm area with new region
+  printf("Free list of vm area for process %d: ", caller->pid);
+  struct vm_rg_struct *temp = rgit;
+  while (temp != NULL)
+  {
+    printf("[%d, %d] ", temp->rg_start, temp->rg_end);
+    temp = temp->rg_next;
+  }
+  printf("\n");
   /* Probe unintialized newrg */
   newrg->rg_start = newrg->rg_end = -1;
 
@@ -618,7 +626,24 @@ int get_free_vmrg_area(struct pcb_t *caller, int vmaid, int size, struct vm_rg_s
   }
 
   if (newrg->rg_start == -1) // new region not found
+  {
+    printf("new region not found\n");
     return -1;
+  }
+  else
+  {
+    printf("new region found: [%d, %d]\n", newrg->rg_start, newrg->rg_end);
+  }
+
+  // show free list after alloc
+  printf("Free list of vm area for process %d after alloc: ", caller->pid);
+  rgit = cur_vma->vm_freerg_list;
+  while (rgit != NULL)
+  {
+    printf("[%d, %d] ", rgit->rg_start, rgit->rg_end);
+    rgit = rgit->rg_next;
+  }
+  printf("\n");
 
   // pthread_mutex_unlock(&caller->mm->mtx);
 
