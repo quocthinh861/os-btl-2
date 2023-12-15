@@ -141,16 +141,6 @@ int __alloc(struct pcb_t *caller, int vmaid, int rgid, int size, int *alloc_addr
   if (rgit == NULL)
     return -1;
 
-  // show free list of vm area with new region
-  printf("Free list of vm area for process %d: ", caller->pid);
-  struct vm_rg_struct *temp = rgit;
-  while (temp != NULL)
-  {
-    printf("[%d, %d] ", temp->rg_start, temp->rg_end);
-    temp = temp->rg_next;
-  }
-  printf("\n");
-
   /*Successful increase limit */
   caller->mm->symrgtbl[rgid].rg_start = old_sbrk;
   caller->mm->symrgtbl[rgid].rg_end = old_sbrk + size;
@@ -324,6 +314,7 @@ int pg_getval(struct mm_struct *mm, int addr, BYTE *data, struct pcb_t *caller)
 int pg_setval(struct mm_struct *mm, int addr, BYTE value, struct pcb_t *caller)
 {
   int pgn = PAGING_PGN(addr);
+    printf("Set value to page %d\n", pgn); // DEBUGGING
   int off = PAGING_OFFST(addr);
   int fpn;
 
@@ -493,7 +484,7 @@ int validate_overlap_vm_area(struct pcb_t *caller, int vmaid, int vmastart, int 
   // Check if the new memory range overlaps with the current vm_area_struct
   while (vma)
   {
-    // if (OVERLAP(vma->vm_start, vmastart, vmaend, vma->vm_end) == 0)
+    if (OVERLAP(vma->vm_start, vmastart, vmaend, vma->vm_end) == 0)
     //   return -1;
     vma = vma->vm_next;
   }
